@@ -42,8 +42,6 @@ bot.on('message', msg => {
 			.setDescription(CM.ERROR);
 		msg.channel.send(errorEmbed);
 	}
-
-	
 });
 
 bot.login(settings.token);
