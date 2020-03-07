@@ -13,11 +13,11 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord:', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update:', 'Deployed myself on Heroku')
+		.addField('Last update:', 'Reimplemented minesweeper-related commands')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
-	.then(() => bot.user.setActivity('Minesweeper 🚩', { type: 'PLAYING' }));
+	.then(() => bot.user.setActivity('Minesweeper 🚩', {type: 'PLAYING'}));
 });
 
 const StringTypeManager = require('./cli_modules/StringTypeManager.js');
@@ -25,14 +25,17 @@ const CommandManager = require('./cli_modules/CommandManager.js');
 const Command = require('./cli_modules/Command.js');
 
 const simple = require('./commands/simple.js');
+const minesweeping = require('./commands/minesweeping.js');
 
-const commands = [...simple].concat(new Command('help', {'command': 'word'},
-	{'optional': ['command']},
-	(args) => {
-		typing(args.CHANNEL, 'Command `help` not implemented yet.');
-	}));
+const commands = [...simple]
+	.concat([...minesweeping])
+	.concat(new Command('help', {'command': 'word'},
+		{'optional': ['command']},
+		(args) => {
+			typing(args.CHANNEL, 'Command `help` not implemented yet.');
+		}));
 
-console.log(commands);
+console.log('Commands:'+commands.map(command => ' '+command.name));
 
 const STM = new StringTypeManager({
 	'any': /.+/s,
