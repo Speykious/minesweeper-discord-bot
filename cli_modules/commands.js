@@ -1,0 +1,54 @@
+const Command = require('./Command.js');
+const { ownerId } = require('../settings.json');
+
+const commands = [
+	new Command('help', {'command': 'word'},
+		{'optional': ['command']},
+		(args) => {
+			args.CHANNEL.send('Command `help` not implemented yet.');
+		}),
+
+	new Command('incode', {'anything': 'any'},
+		{'required': ['anything']},
+		args => {
+			args.CHANNEL.send(`Content: \`${args['anything']}\``);
+		}),
+
+	new Command('stop', {'magicWord': 'word'},
+		{'optional': ['magicWord']},
+		args => {
+			if (args.AUTHOR === ownerId) {
+				switch(args['magicWord']) {
+					case 'plz':		 args.CHANNEL.send(':ok:'); break;
+					case 'yourself': args.CHANNEL.send('Orders recieved, my Lord... :dagger: :eyes:'); break;
+					default: 		 args.CHANNEL.send(':boom:'); break;
+				}
+				
+				args.BOT.destroy();
+			} else {
+				args.CHANNEL.send(`<@!${args.AUTHOR}>, you're not my LORD. You can't stop me.`);
+			}
+			
+		}),
+
+	new Command('ping', {}, {},
+		args => {
+			args.CHANNEL.send('pong');
+		})
+]
+
+module.exports = commands;
+
+/*////
+if (msg.content.substring(0, 5) === 'embed') {
+		
+	if (msg.content.length > 5) minesweeper.newBoard(parseInt(msg.content.substring(6)));
+	console.log(minesweeper.board);
+	testembed.setDescription(minesweeper.textBoard);
+	
+	msg.channel.send(testembed)
+	.then(() => msg.channel.send(`ID of the embed message: \`<${msg.channel.lastMessageID}>\``));
+}
+
+
+////*/
