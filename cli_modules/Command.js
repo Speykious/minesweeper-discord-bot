@@ -47,7 +47,6 @@ class Command {
 					console.log(`\t\t\targname = ${argname} -> ${this.arglist[argname]}`);
 					///////////////////////////////////////////////*/
 					const tester = new RegExp(`^${stm.regexString(this.arglist[argname])}`, 'g');
-					console.log('tester = '+tester.source);
 					let match = argstr.match(tester);
 					if (match) {
 						args[argname] = match[0];

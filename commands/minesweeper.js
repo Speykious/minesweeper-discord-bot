@@ -1,4 +1,7 @@
-let board = [...Array(8)].map((_, i) => ' '.repeat(8));
+const { RichEmbed } = require('discord.js');
+
+let board = [...Array(16)].map((_, i) => ' '.repeat(12));
+let lastBoardMessage = undefined;
 
 const emos = {
 	'm': '💥',
@@ -17,11 +20,11 @@ const emos = {
 
 module.exports = {
 	board,
+	lastBoardMessage,
 	emos,
 
 	/**
-	 * To get the string of the board
-	 * @param {Array<string>} b The board
+	 * The board as an array of emojis.
 	 */
 	get textBoard() {
 		return this.board
@@ -29,6 +32,17 @@ module.exports = {
 			.map(char => emos[char])
 			.join('')
 		).join('\n');
+	},
+	
+	/**
+	 * The RichEmbed object containing the board and various other informations.
+	 */
+	get embedBoard() {
+		return new Discord.RichEmbed()
+			.setTitle('Minesweeper Board')
+			.setColor(0xff3264)
+			.addField(`Size: ${this.board[0].length}x${this.board.length}`, this.textBoard)
+			.setFooter('⚠WARNING⚠: you cannot play with it yet.');
 	},
 
 	newBoard(size) {
