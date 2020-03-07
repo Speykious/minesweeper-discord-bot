@@ -12,7 +12,7 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord:', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update:', 'Deployed myself on Heroku...')
+		.addField('Last update:', 'Deployed myself on Heroku')
 		.setFooter(`I am now ON.`);
 
 	defchan.send(testembed)
