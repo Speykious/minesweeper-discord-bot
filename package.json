@@ -10,7 +10,7 @@
 	"author": "Speykious",
 	"license": "GPL-3.0",
 	"scripts": {
-		"test": "node ."
+		"start": "node ."
 	},
 	"dependencies": {
 		"discord.js": "11.6.1",
