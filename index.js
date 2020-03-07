@@ -13,7 +13,7 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord:', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update:', 'Reimplemented minesweeper-related commands')
+		.addField('Last update:', 'Reworking the minesweeper board')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
@@ -44,7 +44,7 @@ const STM = new StringTypeManager({
 	'uint': /\d+/,
 	'int': /[-+]?\d+/,
 	//'list': /\[.\]/, // that one seems pretty useless, but maybe it will be useful in the future.
-	'position': /0[xX][\da-fA-F]{2}/
+	'position': /0[xX][\da-f]{2}/
 })
 
 const CM = new CommandManager(bot, process.env.PREFIX, STM, commands);
