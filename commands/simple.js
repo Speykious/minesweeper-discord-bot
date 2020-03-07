@@ -2,13 +2,7 @@ const Command = require('./Command.js');
 require('dotenv-flow').config();
 const ownerId = process.env.OWNER_ID;
 
-const commands = [
-	new Command('help', {'command': 'word'},
-		{'optional': ['command']},
-		(args) => {
-			args.CHANNEL.send('Command `help` not implemented yet.');
-		}),
-
+module.exports = [
 	new Command('incode', {'anything': 'any'},
 		{'required': ['anything']},
 		args => {
@@ -36,15 +30,8 @@ const commands = [
 				args.CHANNEL.send(`<@!${args.AUTHOR}>, you're not my Lord. You can't stop me.`);
 			}
 			
-		}),
-
-	new Command('ping', {}, {},
-		args => {
-			args.CHANNEL.send('pong');
 		})
 ]
-
-module.exports = commands;
 
 /*////
 if (msg.content.substring(0, 5) === 'embed') {
