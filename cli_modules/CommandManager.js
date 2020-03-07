@@ -25,7 +25,7 @@ class CommandManager {
 	getCommand(cline) {
 		const tester = new RegExp(`^${this.stm.regexString('word')}`, 'g');
 		const match = cline.match(tester);
-		////////////////////////////////////////////////
+		/*///////////////////////////////////////////////
 		console.log(`\t\tcline = "${cline}"`);
 		console.log(`\t\ttester = /${tester.source}/${tester.flags}`);
 		console.log('\t\tmatch = '+match);
@@ -43,7 +43,7 @@ class CommandManager {
 		let message = msg.content;
 		const tester = new RegExp('^'+this.prefix, 'g');
 		let match = message.match(tester);
-		////////////////////////////////////////////////
+		/*///////////////////////////////////////////////
 		console.log('message = '+message);
 		console.log(`tester = /${tester.source}/${tester.flags}`);
 		console.log('match = '+match);
@@ -51,7 +51,7 @@ class CommandManager {
 		if (match) {
 			message = message.substring(match[0].length);
 			const cmd = this.getCommand(message);
-			////////////////////////////////////////////////
+			/*///////////////////////////////////////////////
 			console.log(`\tmessage = ${message}`);
 			console.log('\tcmd = '+cmd);
 			///////////////////////////////////////////////*/
@@ -65,7 +65,7 @@ class CommandManager {
 			}
 			message = message.substring(cmd.name.length);
 			match = message.match(/^\s+/);
-			////////////////////////////////////////////////
+			/*///////////////////////////////////////////////
 			console.log(`\tmessage = ${message} (substringed cmd.name)`);
 			console.log(`\tmatch = ${match} (matched message)`);
 			///////////////////////////////////////////////*/

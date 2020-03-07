@@ -41,7 +41,7 @@ class Command {
 			for (let argname of this.syntax.required) {
 				if (error) args[argname] = null;
 				else {
-					////////////////////////////////////////////////
+					/*///////////////////////////////////////////////
 					console.log('\t\t\targstr = '+argstr);
 					console.log('\t\t\targs = '+args);
 					console.log(`\t\t\targname = ${argname} -> ${this.arglist[argname]}`);
@@ -67,7 +67,7 @@ class Command {
 			for (let argname of this.syntax.optional) {
 				if (error) args[argname] = null;
 				else {
-					////////////////////////////////////////////////
+					/*///////////////////////////////////////////////
 					console.log(`\t\t\tthis.syntax.optional:`);
 					console.log('\t\t\targstr = '+argstr);
 					console.log('\t\t\targs = '+args);

@@ -1,5 +1,6 @@
 const Command = require('./Command.js');
-const { ownerId } = require('../settings.json');
+require('dotenv-flow').config();
+const ownerId = process.env.OWNER_ID;
 
 const commands = [
 	new Command('help', {'command': 'word'},
@@ -19,14 +20,20 @@ const commands = [
 		args => {
 			if (args.AUTHOR === ownerId) {
 				switch(args['magicWord']) {
-					case 'plz':		 args.CHANNEL.send(':ok:'); break;
-					case 'yourself': args.CHANNEL.send('Orders recieved, my Lord... :dagger: :eyes:'); break;
-					default: 		 args.CHANNEL.send(':boom:'); break;
+					case 'plz':
+						args.CHANNEL.send(':ok:');
+						break;
+					case 'yourself':
+						args.CHANNEL.send('Orders recieved, my Lord... :dagger: :eyes:');
+						break;
+					default:
+						args.CHANNEL.send(':boom:');
+						break;
 				}
-				
+				args.CHANNEL.stopTyping();
 				args.BOT.destroy();
 			} else {
-				args.CHANNEL.send(`<@!${args.AUTHOR}>, you're not my LORD. You can't stop me.`);
+				args.CHANNEL.send(`<@!${args.AUTHOR}>, you're not my Lord. You can't stop me.`);
 			}
 			
 		}),
@@ -49,6 +56,4 @@ if (msg.content.substring(0, 5) === 'embed') {
 	msg.channel.send(testembed)
 	.then(() => msg.channel.send(`ID of the embed message: \`<${msg.channel.lastMessageID}>\``));
 }
-
-
 ////*/

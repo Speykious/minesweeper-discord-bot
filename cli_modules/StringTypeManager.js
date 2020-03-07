@@ -42,7 +42,9 @@ class StringTypeManager {
 	}
 
 	regexString(name) {
-		return this.types[name].source;
+		if (this.types[name])
+			return this.types[name].source;
+		else return undefined;
 	}
 }
 

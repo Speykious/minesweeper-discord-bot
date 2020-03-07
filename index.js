@@ -1,25 +1,27 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
+require('dotenv-flow').config();
+const { version } = require('./package.json');
+
 bot.on('ready', () => {
 	console.log(`Logged in as ${bot.user.tag}!`);
-	const defchid = '682003578839498863';
-	const defchan = bot.channels.get(defchid);
-
+	const defchan = bot.channels.get(process.env.DEFAULT_CHANNEL_ID);
+	defchan.startTyping();
 	const testembed = new Discord.RichEmbed()
-		.setAuthor('Speykious')
+		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
-		.setDescription(minesweeper.textBoard)
-		.setFooter('Sorry, this is just a test.');
+		.addField('Owner my Lord:', `<@!${process.env.OWNER_ID}>`)
+		.addField('Last update:', 'Secured some environment variables...')
+		.setFooter(`I am now ON.`);
 
-	defchan.send('◻')
-	.then(() => defchan.send(testembed));
+	defchan.send(testembed)
+	.then(() => defchan.stopTyping(true));
 });
 
 
 
 const minesweeper = require('./minesweeper.js');
-const settings = require('./settings.json');
 
 const StringTypeManager = require('./cli_modules/StringTypeManager.js');
 const CommandManager = require('./cli_modules/CommandManager.js');
@@ -35,7 +37,7 @@ const STM = new StringTypeManager({
 	'position': /0[xX][\da-fA-F]{2}/
 })
 
-const CM = new CommandManager(bot, settings.commandPrefix, STM, commands);
+const CM = new CommandManager(bot, process.env.PREFIX, STM, commands);
 
 bot.on('message', msg => {
 	// Continue only if the msg begins with the prefix
@@ -49,4 +51,4 @@ bot.on('message', msg => {
 	}
 });
 
-bot.login(settings.token);
+bot.login(process.env.TOKEN);

@@ -1,4 +1,5 @@
 node_modules
 settings.json
+.env
 yarn-error.log
 yarn.lock
