@@ -13,7 +13,7 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord:', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update:', 'Reworking the minesweeper board')
+		.addField('Last update:', 'Implemented a board cell hide/show/flag mechanism')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
