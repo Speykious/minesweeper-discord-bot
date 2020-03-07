@@ -1,23 +1,29 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const { StringTypeManager, Command, CommandManager } = require('./commandManager.js');
-const minesweeper = require('./minesweeper.js');
-const settings = require('./settings.json');
-
-const testembed = new Discord.RichEmbed()
-	.setAuthor('Speykious')
-	.setColor(0x55ccff)
-	.setDescription(minesweeper.textBoard)
-	.setFooter('Sorry, this is just a test.');
-
 bot.on('ready', () => {
 	console.log(`Logged in as ${bot.user.tag}!`);
 	const defchid = '682003578839498863';
 	const defchan = bot.channels.get(defchid);
+
+	const testembed = new Discord.RichEmbed()
+		.setAuthor('Speykious')
+		.setColor(0x55ccff)
+		.setDescription(minesweeper.textBoard)
+		.setFooter('Sorry, this is just a test.');
+
 	defchan.send('◻')
 	.then(() => defchan.send(testembed));
 });
+
+
+
+const minesweeper = require('./minesweeper.js');
+const settings = require('./settings.json');
+
+const StringTypeManager = require('./cli_modules/StringTypeManager.js');
+const CommandManager = require('./cli_modules/CommandManager.js');
+const commands = require('./cli_modules/commands.js');
 
 const STM = new StringTypeManager({
 	'any': /.+/s,
@@ -29,7 +35,6 @@ const STM = new StringTypeManager({
 	'position': /0[xX][\da-fA-F]{2}/
 })
 
-const { commands } = require('./commands.js');
 const CM = new CommandManager(bot, settings.commandPrefix, STM, commands);
 
 bot.on('message', msg => {
