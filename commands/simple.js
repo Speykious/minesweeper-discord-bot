@@ -1,12 +1,13 @@
-const Command = require('./Command.js');
+const Command = require('../cli_modules/Command.js');
 require('dotenv-flow').config();
+const typing = require('./typing.js');
 const ownerId = process.env.OWNER_ID;
 
 module.exports = [
 	new Command('incode', {'anything': 'any'},
 		{'required': ['anything']},
 		args => {
-			args.CHANNEL.send(`Content: \`${args['anything']}\``);
+			typing(args.CHANNEL, `Content: \`${args['anything']}\``);
 		}),
 
 	new Command('stop', {'magicWord': 'word'},
@@ -15,19 +16,19 @@ module.exports = [
 			if (args.AUTHOR === ownerId) {
 				switch(args['magicWord']) {
 					case 'plz':
-						args.CHANNEL.send(':ok:');
+						typing(args.CHANNEL, ':ok:');
 						break;
 					case 'yourself':
-						args.CHANNEL.send('Orders recieved, my Lord... :dagger: :eyes:');
+						typing(args.CHANNEL, 'Orders recieved, my Lord... :dagger: :eyes:');
 						break;
 					default:
-						args.CHANNEL.send(':boom:');
+						typing(args.CHANNEL, ':boom:');
 						break;
 				}
-				args.CHANNEL.stopTyping();
+				
 				args.BOT.destroy();
 			} else {
-				args.CHANNEL.send(`<@!${args.AUTHOR}>, you're not my Lord. You can't stop me.`);
+				typing(args.CHANNEL, `<@!${args.AUTHOR}>, you're not my Lord. You can't stop me.`);
 			}
 			
 		})
