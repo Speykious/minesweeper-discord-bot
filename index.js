@@ -13,7 +13,7 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord:', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update:', 'Implemented a board cell hide/show/flag EDITING mechanism')
+		.addField('Last update:', 'Reworked the way errors work and fixed tons of problems that came with it')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
@@ -43,22 +43,16 @@ const STM = new StringTypeManager({
 	'word': /\w+/,
 	'uint': /\d+/,
 	'int': /[-+]?\d+/,
-	//'list': /\[.\]/, // that one seems pretty useless, but maybe it will be useful in the future.
-	'position': /0[xX][\da-f]{2}/
+	'position': /[xX][\da-f]{2}/,
+	'list[position]': /([xX][\da-f]{2}\s+)?[xX][\da-f]{2}/
 })
 
 const CM = new CommandManager(bot, process.env.PREFIX, STM, commands);
 
-
-
 bot.on('message', msg => {
 	// Continue only if the msg begins with the prefix
 	if (!CM.interpret(msg)) {
-		const errorEmbed = new Discord.RichEmbed()
-			.setColor(0xff3248)
-			.setTitle('**Error**')
-			.setDescription(CM.ERROR);
-		typing(msg.channel, errorEmbed);
+		typing(msg.channel, CM.ERROR);
 	}
 });
 

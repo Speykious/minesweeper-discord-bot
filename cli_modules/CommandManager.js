@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const StringTypeManager = require('./StringTypeManager.js');
+const CError = require('./CommandErrors.js');
 
 class CommandManager {
 	/**
@@ -57,10 +58,10 @@ class CommandManager {
 			///////////////////////////////////////////////*/
 			switch (cmd) {
 				case undefined:
-					this.ERROR = `Command is not defined. (command line: \`${message}\`)`;
+					this.ERROR = new CError.ExistentialCrisisError(msg, message);
 					return undefined;
 				case null:
-					this.ERROR = `Command is not a word. (command line: \`${message}\`)`;
+					this.ERROR = new CError.NameError(msg, message);
 					return null;
 			}
 			message = message.substring(cmd.name.length);
@@ -71,7 +72,7 @@ class CommandManager {
 			///////////////////////////////////////////////*/
 			if (match) message = message.substring(match[0].length);
 			const args = cmd.getArgs(this.bot, this.stm, msg, message);
-			console.log(args);
+			// console.log(args);
 			if (args.ERROR) {
 				this.ERROR = args.ERROR;
 				return false;

@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const CError = require('./CommandErrors.js');
 
 /**
  * Object that runs a function depending on arguments.
@@ -53,7 +54,7 @@ class Command {
 					match = argstr.match(/^\s+/);
 					if (match) argstr = argstr.substring(match[0].length);
 				} else {
-					args['ERROR'] = `\`${argname}\` argument didn't match.`;
+					args['ERROR'] = new CError.SyntaxError(msg, this, argname);
 					args[argname] = null;
 					error = true;
 					break;
@@ -81,10 +82,9 @@ class Command {
 			}
 		}
 		
-
 		// that error should not come in priority of previous errors, hence '&& !error'
 		if (argstr != '' && !error) {
-			args['ERROR'] = `Too many arguments: \`${argstr}\``;
+			args['ERROR'] = new CError.TooManyArgsError(msg, this, argstr);
 			error = true;
 		}
 
