@@ -36,7 +36,7 @@ module.exports = [
 	new Command('edit', {'before': 'string', 'after': 'string'},
 		{'required': ['before', 'after']},
 		args => {
-			typing(args.CHANNEL, args['before'])
-			.then(message => message.edit(args['after']));
+			typing(args.CHANNEL, '```py\nbefore = '+args['before']+'```')
+			.then(message => message.edit('```fix\nafter = '+args['after']+'```'));
 		})
 ]
