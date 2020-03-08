@@ -84,7 +84,7 @@ class Command {
 
 		// that error should not come in priority of previous errors, hence '&& !error'
 		if (argstr != '' && !error) {
-			args['ERROR'] = `Too much arguments: \`${argstr}\``;
+			args['ERROR'] = `Too many arguments: \`${argstr}\``;
 			error = true;
 		}
 
