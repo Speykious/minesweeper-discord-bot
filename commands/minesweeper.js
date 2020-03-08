@@ -1,4 +1,4 @@
-const { RichEmbed } = require('discord.js');
+const Discord = require('discord.js');
 
 let board = [...Array(16)].map((_, i) => '0'.repeat(12));
 let hiddens = [...Array(16)].map((_, i) => 'h'.repeat(12));
@@ -46,9 +46,9 @@ module.exports = {
 	get embedBoard() {
 		return new Discord.RichEmbed()
 			.setTitle('Minesweeper Board')
-			.setColor(0xff3264)
 			.addField(`Size: ${this.board[0].length}x${this.board.length}`, this.textBoard)
-			.setFooter('⚠WARNING⚠: you cannot play with it yet.');
+			.setFooter('⚠WARNING⚠: you cannot play with it yet.')
+			.setColor(0xff6416);
 	},
 
 	newBoard(size) {
