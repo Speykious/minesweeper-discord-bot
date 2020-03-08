@@ -7,8 +7,9 @@ const Discord = require('discord.js');
  */
 function typing(channel, anything) {
 	channel.startTyping();
-	return channel.send(anything)
-	.then(() => channel.stopTyping(true));
+	let promise = channel.send(anything);
+	promise.then(() => channel.stopTyping(true));
+	return promise;
 }
 
 module.exports = typing;
