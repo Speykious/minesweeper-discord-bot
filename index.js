@@ -49,10 +49,11 @@ const STM = new StringTypeManager({
 
 const CM = new CommandManager(bot, process.env.PREFIX, STM, commands);
 
+
+
 bot.on('message', msg => {
 	// Continue only if the msg begins with the prefix
 	if (!CM.interpret(msg)) {
-		let E = '';
 		const errorEmbed = new Discord.RichEmbed()
 			.setColor(0xff3248)
 			.setTitle('**Error**')
