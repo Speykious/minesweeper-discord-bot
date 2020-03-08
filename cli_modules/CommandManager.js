@@ -71,6 +71,7 @@ class CommandManager {
 			///////////////////////////////////////////////*/
 			if (match) message = message.substring(match[0].length);
 			const args = cmd.getArgs(this.bot, this.stm, msg, message);
+			console.log(args);
 			if (args.ERROR) {
 				this.ERROR = args.ERROR;
 				return false;

@@ -56,7 +56,8 @@ module.exports = [
 			const y = hexstr.indexOf(args['coords'][3]);
 			showCell(x, y);
 			args.CHANNEL.lastMessage.delete();
-			minesweeper.lastBoardMessage.edit(minesweeper.embedBoard);
+			if (minesweeper.lastBoardMessage)
+				minesweeper.lastBoardMessage.edit(minesweeper.embedBoard);
 		}),
 	
 	new Command('f', {'coords': 'position'},
@@ -67,6 +68,7 @@ module.exports = [
 			const y = hexstr.indexOf(args['coords'][3]);
 			flagTrigger(x, y);
 			args.CHANNEL.lastMessage.delete();
-			minesweeper.lastBoardMessage.edit(minesweeper.embedBoard);
+			if (minesweeper.lastBoardMessage)
+				minesweeper.lastBoardMessage.edit(minesweeper.embedBoard);
 		})
 ]

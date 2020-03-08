@@ -32,6 +32,7 @@ class Command {
 	 * @param {Discord.Client} bot The bot that executes the commands.
 	 * @param {StringTypeManager} stm The manager for the types of the arguments.
 	 * @param {Discord.Message} msg The message to analyze arguments from.
+	 * @param {string} argstr The string containing the arguments to get.
 	 */
 	getArgs(bot, stm, msg, argstr) {
 		let args = {};
@@ -39,56 +40,57 @@ class Command {
 
 		if (this.syntax.required) {
 			for (let argname of this.syntax.required) {
-				if (error) args[argname] = null;
-				else {
-					/*///////////////////////////////////////////////
-					console.log('\t\t\targstr = '+argstr);
-					console.log('\t\t\targs = '+args);
-					console.log(`\t\t\targname = ${argname} -> ${this.arglist[argname]}`);
-					///////////////////////////////////////////////*/
-					const tester = new RegExp(`^${stm.regexString(this.arglist[argname])}`, 'g');
-					let match = argstr.match(tester);
-					if (match) {
-						args[argname] = match[0];
-						argstr = argstr.substring(match[0].length);
-						match = argstr.match(/^\s+/);
-						if (match) argstr = argstr.substring(match[0].length);
-					} else {
-						args['ERROR'] = `\`${argname}\` argument didn't match.`;
-						args[argname] = null;
-						error = true;
-					}
+				/*///////////////////////////////////////////////
+				console.log('\t\t\targstr = '+argstr);
+				console.log('\t\t\targs = '+args);
+				console.log(`\t\t\targname = ${argname} -> ${this.arglist[argname]}`);
+				///////////////////////////////////////////////*/
+				const tester = new RegExp(`^${stm.regexString(this.arglist[argname])}`, 'g');
+				let match = argstr.match(tester);
+				if (match) {
+					args[argname] = match[0];
+					argstr = argstr.substring(match[0].length);
+					match = argstr.match(/^\s+/);
+					if (match) argstr = argstr.substring(match[0].length);
+				} else {
+					args['ERROR'] = `\`${argname}\` argument didn't match.`;
+					args[argname] = null;
+					error = true;
+					break;
 				}
 			}
 		}
-		
-		if (this.syntax.optional) {
+
+		// we don't need to do anything to the arguments if there is an error
+		if (this.syntax.optional && !error) {
 			for (let argname of this.syntax.optional) {
-				if (error) args[argname] = null;
-				else {
-					/*///////////////////////////////////////////////
-					console.log(`\t\t\tthis.syntax.optional:`);
-					console.log('\t\t\targstr = '+argstr);
-					console.log('\t\t\targs = '+args);
-					console.log(`\t\t\targname = ${argname} -> ${this.arglist[argname]}`);
-					///////////////////////////////////////////////*/
-					const tester = new RegExp(`^${stm.regexString(this.arglist[argname])}`, 'g');
-					let match = argstr.match(tester);
-					if (match) {
-						args[argname] = match[0];
-						argstr = argstr.substring(match[0].length);
-						match = argstr.match(/^\s+/);
-						if (match) argstr = argstr.substring(match[0].length);
-					} else args[argname] = undefined;
-				}
+				/*///////////////////////////////////////////////
+				console.log(`\t\t\tthis.syntax.optional:`);
+				console.log('\t\t\targstr = '+argstr);
+				console.log('\t\t\targs = '+args);
+				console.log(`\t\t\targname = ${argname} -> ${this.arglist[argname]}`);
+				///////////////////////////////////////////////*/
+				const tester = new RegExp(`^${stm.regexString(this.arglist[argname])}`, 'g');
+				let match = argstr.match(tester);
+				if (match) {
+					args[argname] = match[0];
+					argstr = argstr.substring(match[0].length);
+					match = argstr.match(/^\s+/);
+					if (match) argstr = argstr.substring(match[0].length);
+				} else args[argname] = undefined;
 			}
 		}
 		
-		if (argstr != '') {
-			// nullify all the arguments
-			for (let arg in args) args[arg] = null;
+
+		// that error should not come in priority of previous errors, hence '&& !error'
+		if (argstr != '' && !error) {
 			args['ERROR'] = `Too much arguments: \`${argstr}\``;
+			error = true;
 		}
+
+		// nullify all the arguments if there is any error
+		if (error) for (let arg in args)
+			if (arg != 'ERROR') args[arg] = null;
 
 		args['BOT'] = bot;
 		args['AUTHOR'] = msg.author.id;
