@@ -39,7 +39,7 @@ console.log('Commands:'+commands.map(command => ' '+command.name));
 
 const STM = new StringTypeManager({
 	'any': /.+/s,
-	'string': /"(.+)?"/,
+	'string': /"((.*?)[^\\])?"/,
 	'word': /\w+/,
 	'uint': /\d+/,
 	'int': /[-+]?\d+/,

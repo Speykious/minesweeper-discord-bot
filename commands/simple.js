@@ -31,5 +31,12 @@ module.exports = [
 				typing(args.CHANNEL, `<@!${args.AUTHOR}>, you're not my Lord. You can't stop me.`);
 			}
 			
+		}),
+	
+	new Command('edit', {'before': 'string', 'after': 'string'},
+		{'required': ['before', 'after']},
+		args => {
+			typing(args.CHANNEL, args['before'])
+			.then(message => message.edit(args['after']));
 		})
 ]
