@@ -17,7 +17,7 @@ const boardEmos = {
 }
 const hiddensEmos = {
 	'h': '◻',
-	'f': ':triangular_flag_on_post:'
+	'f': '🚩'
 }
 
 module.exports = {
@@ -45,10 +45,11 @@ module.exports = {
 	 */
 	get embedBoard() {
 		return new Discord.RichEmbed()
+			.setColor(0xff6416)
 			.setTitle('Minesweeper Board')
 			.addField(`Size: ${this.board[0].length}x${this.board.length}`, this.textBoard)
-			.setFooter('⚠WARNING⚠: you cannot play with it yet.')
-			.setColor(0xff6416);
+			.setFooter('⚠WARNING⚠: you cannot play with it yet.');
+			
 	},
 
 	newBoard(size) {
