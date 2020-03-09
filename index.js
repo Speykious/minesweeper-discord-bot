@@ -13,7 +13,7 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update', 'Added descriptions to commands and reviewed the way syntaxes are shown...\n... and FINALLY implemented the `help` command, and correctly')
+		.addField('Last update', 'Added descriptions to commands and reviewed the way syntaxes are shown...\n... and FINALLY implemented the `help` command, and correctly\n+ Fixed a few things')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
@@ -44,7 +44,7 @@ commands[commands.length-1].run = (args) => {
 				.addField('Syntax', `\`${command.syntaxString}\``)
 				.setFooter(`MinesweeperBot [v${version}]`);
 			typing(args.CHANNEL, helpcmd);
-		} else return new CErrors.ExistentialCrisisError(args.CHANNEL.lastMessage, args['command']).embed;
+		} else return new CErrors.ExistentialCrisisError(args.CHANNEL.lastMessage, args['command']);
 		
 	} else {
 		const helplist = new Discord.RichEmbed()

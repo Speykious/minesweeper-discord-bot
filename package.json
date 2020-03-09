@@ -1,6 +1,6 @@
 {
 	"name": "minesweeper-discord-bot",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"description": "Minesweeper discord bot",
 	"repository": {
 		"type": "git",

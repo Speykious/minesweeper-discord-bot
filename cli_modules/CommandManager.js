@@ -58,10 +58,10 @@ class CommandManager {
 			///////////////////////////////////////////////*/
 			switch (cmd) {
 				case undefined:
-					this.ERROR = new CError.ExistentialCrisisError(msg, message).embed;
+					this.ERROR = new CError.ExistentialCrisisError(msg, message);
 					return undefined;
 				case null:
-					this.ERROR = new CError.NameError(msg, message).embed;
+					this.ERROR = new CError.NameError(msg, message);
 					return null;
 			}
 			message = message.substring(cmd.name.length);
