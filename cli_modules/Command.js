@@ -70,7 +70,7 @@ class Command {
 					match = argstr.match(/^\s+/);
 					if (match) argstr = argstr.substring(match[0].length);
 				} else {
-					args['ERROR'] = new CError.SyntaxError(msg, this, argname);
+					args['ERROR'] = new CError.SyntaxError(msg, this.arglist, this.syntaxString, argname);
 					args[argname] = null;
 					error = true;
 					break;
@@ -100,7 +100,7 @@ class Command {
 		
 		// that error should not come in priority of previous errors, hence '&& !error'
 		if (argstr != '' && !error) {
-			args['ERROR'] = new CError.TooManyArgsError(msg, this, argstr);
+			args['ERROR'] = new CError.CTooManyArgsError(msg, this.syntaxString, argstr);
 			error = true;
 		}
 
