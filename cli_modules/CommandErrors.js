@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const Command = require('./Command.js');
+const { version } = require('./package.json');
 
 /**
  * To manage errors more easily.

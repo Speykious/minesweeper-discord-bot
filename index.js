@@ -13,7 +13,7 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update', 'Added descriptions to commands and reviewed the way syntaxes are shown...\n... and FINALLY implemented the `help` command')
+		.addField('Last update', 'Added descriptions to commands and reviewed the way syntaxes are shown...\n... and FINALLY implemented the `help` command, and correctly')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
@@ -35,7 +35,7 @@ const commands = [...simple]
 
 commands[commands.length-1].run = (args) => {
 	if (args['command']) {
-		const command = commands.filter(command => command.name === args['command']);
+		const command = commands.filter(command => command.name === args['command'])[0];
 		if (command) {
 			const helpcmd = new Discord.RichEmbed()
 				.setColor(0x3280ff)
