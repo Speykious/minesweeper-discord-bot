@@ -62,8 +62,6 @@ commands[commands.length-1].run = (args) => {
 	}
 }
 
-console.log('Commands:'+commands.map(command => ' '+command.name));
-console.log(commands[commands.length-1]);
 const STM = new StringTypeManager({
 	'any': /.+/s,
 	'string': /"((.*?)[^\\])?"/,

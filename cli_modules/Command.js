@@ -70,9 +70,7 @@ class Command {
 					match = argstr.match(/^\s+/);
 					if (match) argstr = argstr.substring(match[0].length);
 				} else {
-					console.log('I got here');
 					args['ERROR'] = new SyntaxError(msg, this.arglist, this.syntaxString, argname);
-					console.log(args);
 					args[argname] = null;
 					error = true;
 					break;
@@ -102,9 +100,7 @@ class Command {
 		
 		// that error should not come in priority of previous errors, hence '&& !error'
 		if (argstr != '' && !error) {
-			console.log('I got here (tmae)');
 			args['ERROR'] = new TooManyArgsError(msg, this.syntaxString, argstr);
-			console.log(args);
 			error = true;
 		}
 
