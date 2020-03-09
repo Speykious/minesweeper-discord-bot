@@ -34,8 +34,8 @@ function flagTrigger(x, y) {
 
 
 module.exports = [
-	new Command('show', {'ui': 'word'},
-		{'required': ['ui']},
+	new Command('show', 'Shows various minesweeper data, such as the board, or... the board.',
+		{'ui': 'word'}, {'required': ['ui']},
 		args => {
 			switch(args['ui']) {
 				case 'board':
@@ -48,8 +48,8 @@ module.exports = [
 			}
 		}),
 	
-	new Command('t', {'coords': 'position'},
-		{'required': ['coords']},
+	new Command('t', 'Reveals a minesweeper cell of the grid.',
+		{'coords': 'position'}, {'required': ['coords']},
 		args => {
 			const hexstr = '0123456789abcdef';
 			const x = hexstr.indexOf(args['coords'][2]);
@@ -60,8 +60,8 @@ module.exports = [
 				minesweeper.lastBoardMessage.edit(minesweeper.embedBoard);
 		}),
 	
-	new Command('f', {'coords': 'position'},
-		{'required': ['coords']},
+	new Command('f', 'Flags a minesweeper cell of the grid.',
+		{'coords': 'position'}, {'required': ['coords']},
 		args => {
 			const hexstr = '0123456789abcdef';
 			const x = hexstr.indexOf(args['coords'][2]);
