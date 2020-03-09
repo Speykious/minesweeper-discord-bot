@@ -13,7 +13,9 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update', 'Added descriptions to commands and reviewed the way syntaxes are shown...\n... and FINALLY implemented the `help` command, and correctly\n+ Fixed a few things')
+		.addField('Last update', 'Added descriptions to commands and reviewed the way syntaxes are shown...\n'
+					+'... and FINALLY implemented the `help` command, and correctly\n'
+					+'+ Fixed a *bunch* of things')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
