@@ -41,7 +41,7 @@ commands[commands.length-1].run = (args) => {
 				.setColor(0x3280ff)
 				.setTitle(`Command Help: \`${command.name}\``)
 				.setDescription(command.description)
-				.addField('Syntax', command.syntaxString)
+				.addField('Syntax', `\`${command.syntaxString}\``)
 				.setFooter(`MinesweeperBot [v${version}]`);
 			typing(args.CHANNEL, helpcmd);
 		} else return new CErrors.ExistentialCrisisError(args.CHANNEL.lastMessage, args['command']).embed;
