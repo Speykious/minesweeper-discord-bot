@@ -22,6 +22,7 @@ bot.on('ready', () => {
 
 const StringTypeManager = require('./cli_modules/StringTypeManager.js');
 const CommandManager = require('./cli_modules/CommandManager.js');
+const CErrors = require('./cli_modules/CommandErrors.js');
 const Command = require('./cli_modules/Command.js');
 
 const simple = require('./commands/simple.js');
@@ -34,13 +35,17 @@ const commands = [...simple]
 
 commands[commands.length-1].run = (args) => {
 	if (args['command']) {
-		const helpcmd = new Discord.RichEmbed()
-			.setColor(0x3280ff)
-			.setTitle(`Command Help: \`${args['command'].name}\``)
-			.setDescription(args['command'].description)
-			.addField('Syntax', args['command'].syntaxString)
-			.setFooter(`MinesweeperBot [v${version}]`);
-		typing(args.CHANNEL, helpcmd);
+		const command = commands.filter(command => command.name === args['command']);
+		if (command) {
+			const helpcmd = new Discord.RichEmbed()
+				.setColor(0x3280ff)
+				.setTitle(`Command Help: \`${command.name}\``)
+				.setDescription(command.description)
+				.addField('Syntax', command.syntaxString)
+				.setFooter(`MinesweeperBot [v${version}]`);
+			typing(args.CHANNEL, helpcmd);
+		} else return new CErrors.ExistentialCrisisError(args.CHANNEL.lastMessage, args['command']).embed;
+		
 	} else {
 		const helplist = new Discord.RichEmbed()
 			.setColor(0x3264ff)
