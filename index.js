@@ -12,8 +12,8 @@ bot.on('ready', () => {
 	const testembed = new Discord.RichEmbed()
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
-		.addField('Owner my Lord:', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update:', 'Reworked the way errors work and fixed tons of problems that came with it')
+		.addField('Owner my Lord', `<@!${process.env.OWNER_ID}>`)
+		.addField('Last update', 'Added descriptions to commands and reviewed the way syntaxes are shown...\n... and FINALLY implemented the `help` command')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
@@ -29,11 +29,30 @@ const minesweeping = require('./commands/minesweeping.js');
 
 const commands = [...simple]
 	.concat([...minesweeping])
-	.concat(new Command('help', {'command': 'word'},
-		{'optional': ['command']},
-		(args) => {
-			typing(args.CHANNEL, 'Command `help` not implemented yet.');
-		}));
+	.concat(new Command('help', 'Helps you to type commands to interact with me.',
+		{'command': 'word'}, {'optional': ['command']}));
+
+commands[commands.length-1].run = (args) => {
+	if (args['command']) {
+		const helpcmd = new Discord.RichEmbed()
+			.setColor(0x3280ff)
+			.setTitle(`Command Help: \`${args['command'].name}\``)
+			.setDescription(args['command'].description)
+			.addField('Syntax', args['command'].syntaxString)
+			.setFooter(`MinesweeperBot [v${version}]`);
+		typing(args.CHANNEL, helpcmd);
+	} else {
+		const helplist = new Discord.RichEmbed()
+			.setColor(0x3264ff)
+			.setTitle('Command List')
+			.setDescription(
+				commands.map(command => `\`${command.name}\`: ${command.description}`)
+					.join('\n')
+			)
+			.setFooter(`MinesweeperBot [v${version}]`);
+		typing(args.CHANNEL, helplist);
+	}
+}
 
 console.log('Commands:'+commands.map(command => ' '+command.name));
 

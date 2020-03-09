@@ -29,7 +29,8 @@ class CommandError {
 		this.embed = new Discord.RichEmbed()
 			.setColor(this.color)
 			.setTitle(`**${this.type} Error**`)
-			.setDescription(this.description);
+			.setDescription(this.description)
+			.setFooter(`MinesweeperBot [v${version}]`);
 		
 		if (this.additionalFields)
 			for (let field of this.additionalFields)
