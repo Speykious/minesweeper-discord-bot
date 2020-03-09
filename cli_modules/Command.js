@@ -4,20 +4,23 @@ const CError = require('./CommandErrors.js');
 /**
  * Object that runs a function depending on arguments.
  * @property {string} name The name of the command.
+ * @property {string} description THe description of the command.
  * @property {object} arglist The list of arguments of the command, with their name as key and their type as value.
- * @property {{'required': string[], 'optional': string[]}} syntax The syntax of the command.
+ * @property {{required: string[], optional: string[]}} syntax The syntax of the command.
  * @function run The function which is run when executing the command, and returns either a string to indicate an error or null for success.
  */
 class Command {
 	/**
 	 * Creates a Command object.
 	 * @param {string} name The name of the command.
+	 * @param {string} description The description of the command.
 	 * @param {object} arglist The list of arguments of the command, with their name as key and their type as value.
-	 * @param {{'required': string[], 'optional': string[]}} syntax The syntax of the command.
-	 * @param {function({'BOT': Discord.Client, 'AUTHOR': string, 'CHANNEL': Discord.TextChannel}) => string} run The function which is run when executing the command, and returns either a string to indicate an error or null for success.
+	 * @param {{required: string[], optional: string[]}} syntax The syntax of the command.
+	 * @param {function({BOT: Discord.Client, AUTHOR: string, CHANNEL: Discord.TextChannel}) => string} run The function which is run when executing the command, and returns either a string to indicate an error or null for success.
 	 */
-	constructor(name, arglist, syntax, run = function(args){}) {
+	constructor(name, description, arglist, syntax, run = function(args){}) {
 		this.name = name;
+		this.description = description;
 		this.arglist = arglist;
 		this.syntax = syntax;
 		
@@ -26,6 +29,19 @@ class Command {
 				console.log(`Command '${this.name}' is not implemented.`);
 			};
 		else this.run = run;
+	}
+
+	/**
+	 * Returns a string that shows the syntax of the command in a readable form.
+	 */
+	get syntaxString() {
+		let formatted = this.name;
+		if (this.syntax.required)
+			formatted += ' ' + this.syntax.required.map(name => `<${name}>(${this.arglist[name]})`).join(' ');
+		if (this.syntax.optional)
+			formatted += ' ' + this.syntax.optional.map(name => `[${name}](${this.arglist[name]})`).join(' ');
+		
+		return formatted;
 	}
 
 	/**
