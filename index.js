@@ -22,7 +22,8 @@ bot.on('ready', () => {
 
 const StringTypeManager = require('./cli_modules/StringTypeManager.js');
 const CommandManager = require('./cli_modules/CommandManager.js');
-const CErrors = require('./cli_modules/CommandErrors.js');
+const ExistentialCrisisError = require('./cli_modules/CommandErrors/ExistentialCrisisError.js');
+console.log(ExistentialCrisisError);
 const Command = require('./cli_modules/Command.js');
 
 const simple = require('./commands/simple.js');
@@ -44,7 +45,7 @@ commands[commands.length-1].run = (args) => {
 				.addField('Syntax', `\`${command.syntaxString}\``)
 				.setFooter(`MinesweeperBot [v${version}]`);
 			typing(args.CHANNEL, helpcmd);
-		} else return new CErrors.ExistentialCrisisError(args.CHANNEL.lastMessage, args['command']);
+		} else return new ExistentialCrisisError(args.CHANNEL.lastMessage, args['command']);
 		
 	} else {
 		const helplist = new Discord.RichEmbed()
@@ -60,7 +61,7 @@ commands[commands.length-1].run = (args) => {
 }
 
 console.log('Commands:'+commands.map(command => ' '+command.name));
-
+console.log(commands[commands.length-1]);
 const STM = new StringTypeManager({
 	'any': /.+/s,
 	'string': /"((.*?)[^\\])?"/,

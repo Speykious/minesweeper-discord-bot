@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const StringTypeManager = require('./StringTypeManager.js');
-const CError = require('./CommandErrors.js');
+const ExistentialCrisisError = require('./CommandErrors/ExistentialCrisisError.js');
+const NameError = require('./CommandErrors/NameError.js');
 
 class CommandManager {
 	/**
@@ -58,10 +59,10 @@ class CommandManager {
 			///////////////////////////////////////////////*/
 			switch (cmd) {
 				case undefined:
-					this.ERROR = new CError.ExistentialCrisisError(msg, message);
+					this.ERROR = new ExistentialCrisisError(msg, message);
 					return undefined;
 				case null:
-					this.ERROR = new CError.NameError(msg, message);
+					this.ERROR = new NameError(msg, message);
 					return null;
 			}
 			message = message.substring(cmd.name.length);

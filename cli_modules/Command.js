@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const CError = require('./CommandErrors.js');
-
+const SyntaxError = require('./CommandErrors/SyntaxError.js');
+const TooManyArgsError = require('./CommandErrors/TooManyArgsError.js');
 /**
  * Object that runs a function depending on arguments.
  * @property {string} name The name of the command.
@@ -70,7 +70,9 @@ class Command {
 					match = argstr.match(/^\s+/);
 					if (match) argstr = argstr.substring(match[0].length);
 				} else {
-					args['ERROR'] = new CError.SyntaxError(msg, this.arglist, this.syntaxString, argname);
+					console.log('I got here');
+					args['ERROR'] = new SyntaxError(msg, this.arglist, this.syntaxString, argname);
+					console.log(args);
 					args[argname] = null;
 					error = true;
 					break;
@@ -100,7 +102,9 @@ class Command {
 		
 		// that error should not come in priority of previous errors, hence '&& !error'
 		if (argstr != '' && !error) {
-			args['ERROR'] = new CError.CTooManyArgsError(msg, this.syntaxString, argstr);
+			console.log('I got here (tmae)');
+			args['ERROR'] = new TooManyArgsError(msg, this.syntaxString, argstr);
+			console.log(args);
 			error = true;
 		}
 
