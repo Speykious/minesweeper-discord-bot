@@ -120,7 +120,10 @@ class Minesweeper {
 		this.board
 			.forEach(col => col
 				.forEach(cell => {
-					if (cell.mine) cell.hidden = false;
+					if (cell.mine) {
+						cell.flagged = false;
+						cell.hidden = false;
+					}
 				}));
 		
 		return this;
