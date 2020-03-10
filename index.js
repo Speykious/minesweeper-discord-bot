@@ -16,7 +16,8 @@ bot.on('ready', () => {
 		.addField('Last update', 'Tried to implement minesweeper <_<'
 								+ '\n+ fixed 5 issues and added a newboard function'
 								+ '\n+ fixed an issue with the newboard function'
-								+ '\n+ added mines on the board')
+								+ '\n+ added mines on the board'
+								+ '\n+ added a command history')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)

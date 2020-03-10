@@ -26,6 +26,7 @@ class MCell {
  * @property {boolean} playing Whether the game is currently played.
  * @property {boolean} win Whether the game was won.
  * @property {MCell[][]} board The array of cells, the board of the game.
+ * @property {string[]} commandHistory The history of commands typed by the player.
  * @property {Discord.Message} lastBoardMessage The last message containing a shown board.
  */
 class Minesweeper {
@@ -44,7 +45,20 @@ class Minesweeper {
 		this.board = [...Array(width)]
 			.map(el => [...Array(height)]
 			.map(el => new MCell(false)));
+		this.commandHistory = [];
 		this.lastBoardMessage = undefined;
+	}
+
+	/**
+	 * Adds a command to the Command history.
+	 * @param {string} command 
+	 */
+	addCommand(command) {
+		while (this.commandHistory.length > 15)
+			this.commandHistory.shift();
+		this.commandHistory.push(command);
+
+		return this;
 	}
 
 	/**
@@ -184,7 +198,8 @@ class Minesweeper {
 		const embed = new Discord.RichEmbed()
 			.setColor(0xff6416)
 			.setTitle('Minesweeper Board')
-			.addField(`Size: ${this.width}x${this.height}`, this.emojiray)
+			.addField(`Size: ${this.width}x${this.height}`, this.emojiray, true)
+			.addField('Command history', '```'+this.commandHistory.join('\n')+'```')
 			.setFooter('I wonder if everything is fine. 🤔');
 		if (!this.playing) {
 			if (this.win) embed.setDescription('You win!');

@@ -36,7 +36,8 @@ let emojis = {
 	numbers: ['🆓', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣']
 }
 
-let minesweeper = new Minesweeper(emojis).placeMines(10);
+let minesweeper = new Minesweeper(emojis);
+	minesweeper.placeMines(10);
 
 module.exports = [
 	new Command('newboard', 'Creates a new board. Limit in width is 14, limit in height is 30.',
@@ -64,6 +65,7 @@ module.exports = [
 		args => {
 			switch(args['ui']) {
 				case 'board':
+					minesweeper.addCommand(args.CHANNEL.lastMessage.content);
 					typing(args.CHANNEL, minesweeper.embedBoard)
 					.then(message => minesweeper.lastBoardMessage = message);
 					break;
@@ -80,6 +82,7 @@ module.exports = [
 			const x = hexstr.indexOf(args['coords'][1]);
 			const y = hexstr.indexOf(args['coords'][2]);
 			const message = args.CHANNEL.lastMessage;
+			minesweeper.addCommand(message.content);
 			args.CHANNEL.lastMessage.delete();
 			if (x < 0 || x >= minesweeper.width || y < 0 || y >= minesweeper.height)
 				return new PositionError(message, minesweeper);
@@ -101,6 +104,7 @@ module.exports = [
 			const x = hexstr.indexOf(args['coords'][1]);
 			const y = hexstr.indexOf(args['coords'][2]);
 			minesweeper.flagTrigger(x, y);
+			minesweeper.addCommand(args.CHANNEL.lastMessage.content);
 			args.CHANNEL.lastMessage.delete();
 			if (minesweeper.lastBoardMessage)
 				minesweeper.lastBoardMessage.edit(minesweeper.embedBoard);
