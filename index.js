@@ -14,7 +14,9 @@ bot.on('ready', () => {
 		.setColor(0x55ccff)
 		.addField('Owner my Lord', `<@!${process.env.OWNER_ID}>`)
 		.addField('Last update', 'Tried to implement minesweeper <_<'
-								+ '\n+ fixed 4 issues')
+								+ '\n+ fixed 5 issues and added a newboard function'
+								+ '\n+ fixed an issue with the newboard function'
+								+ '\n+ added mines on the board')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)

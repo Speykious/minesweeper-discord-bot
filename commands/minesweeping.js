@@ -17,12 +17,48 @@ class PositionError extends CommandError {
 	}
 }
 
-const minesweeper = new Minesweeper({
+class DifficultyError extends CommandError {
+	/**
+	 * Creates a DifficultyError object.
+	 * @param {Discord.Message} origin The message the error comes from.
+	 * @param {string} difficulty The difficulty that doesn't exist.
+	 */
+	constructor(origin, difficulty) {
+		super('Difficult Existential Crisis', 'The difficulty given doesn\'t exist.', origin, [
+			{name: 'Difficulty given', value: `\`${difficulty}\``},
+			{name: 'Difficulties available', value: '`beginner`, `intermediate`, or `expert`'}
+		])
+	}
+}
+
+let emojis = {
 	mine: '💥', hidden: '◻', flagged: '🚩',
 	numbers: ['🆓', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣']
-})
+}
+
+let minesweeper = new Minesweeper(emojis).placeMines(10);
 
 module.exports = [
+	new Command('newboard', 'Creates a new board. Limit in width is 14, limit in height is 30.',
+		{'difficulty': 'word'}, {'required': ['difficulty']},
+		args => {
+			switch (args['difficulty']) {
+				case 'beginner':
+					minesweeper = new Minesweeper(emojis, 8, 8).placeMines(10);
+					break;
+				case 'intermediate':
+					minesweeper = new Minesweeper(emojis, 10, 12).placeMines(16);
+					break;
+				case 'expert':
+					minesweeper = new Minesweeper(emojis, 12, 16).placeMines(25);
+					break;
+				default:
+					return new DifficultyError(args.CHANNEL.lastMessage, args['difficulty']);
+			}
+
+			
+		}),
+
 	new Command('show', 'Shows various minesweeper data, such as the board, or... the board.',
 		{'ui': 'word'}, {'required': ['ui']},
 		args => {
@@ -49,7 +85,10 @@ module.exports = [
 				return new PositionError(message, minesweeper);
 			
 			const result = minesweeper.reveal(x, y);
-			if (result === 'mine') minesweeper.playing = false;
+			if (result === 'mine') {
+				minesweeper.revealMines();
+				minesweeper.playing = false;
+			}
 			if (minesweeper.lastBoardMessage)
 				minesweeper.lastBoardMessage.edit(minesweeper.embedBoard);
 				

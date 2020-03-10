@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const typing = require('../typing.js');
 
 /**
  * An object that contains the main properties of a cell in a Minesweeper game.
@@ -56,15 +57,12 @@ class Minesweeper {
 		let cell = this.getCell(x, y);
 		if (cell) {
 			if (cell.mine && revealMine) {
-				console.log('m');
 				return 'mine';
 			} 
 			else if (cell.flagged) {
-				console.log('f');
 				return 'flagged';
 			}
 			else if (cell.hidden) {
-				console.log('h');
 				cell.hidden = false;
 				if (this.neighbombs(x, y) == 0) {
 					for (let i = x-1; i <= x+1; i++) {
@@ -76,7 +74,6 @@ class Minesweeper {
 				}
 				return 'revealed';
 			} else {
-				console.log('u');
 				return 'unchanged';
 			}
 		} else return undefined;
@@ -90,6 +87,30 @@ class Minesweeper {
 	flagTrigger(x, y) {
 		let cell = this.getCell(x, y);
 		if (cell) cell.flagged = !cell.flagged;
+		return this;
+	}
+
+	/**
+	 * Places mines across the board.
+	 * @param {number} n The number of mines to place.
+	 */
+	placeMines(n) {
+		if (n === 0) return this;
+
+		const x = Math.floor(Math.random()*(this.width-0.0001));
+		const y = Math.floor(Math.random()*(this.height-0.0001));
+		
+		const cell = this.getCell(x, y);
+		if (cell) {
+			if (cell.mine) return this.placeMines(n);
+			else {
+				cell.mine = true;
+				return this.placeMines(n-1);
+			}
+		} else {
+			console.log('wait what the fuck');
+			return this;
+		}
 	}
 
 	/**
@@ -101,6 +122,8 @@ class Minesweeper {
 				.forEach(cell => {
 					if (cell.mine) cell.hidden = false;
 				}));
+		
+		return this;
 	}
 
 	/**
@@ -135,7 +158,6 @@ class Minesweeper {
 	 */
 	get emojiray() {
 		let text = '';
-		console.log(this.emojis);
 		for (let y = 0; y<this.height; y++) {
 			if (y != 0) text += '\n';
 			for (let x = 0; x<this.width; x++) {
@@ -148,8 +170,6 @@ class Minesweeper {
 				} else text += '❓';
 				
 			}
-			console.log(text);
-			console.log('');
 		}
 		return text;
 	}
