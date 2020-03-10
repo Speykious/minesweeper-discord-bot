@@ -19,7 +19,7 @@ class PositionError extends CommandError {
 
 const minesweeper = new Minesweeper({
 	mine: '💥', hidden: '◻', flagged: '🚩',
-	numbers: '🆓1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣7️⃣8️⃣'
+	numbers: ['🆓', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣']
 })
 
 module.exports = [

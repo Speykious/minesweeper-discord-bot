@@ -19,7 +19,7 @@ class MCell {
 
 /**
  * An class that implements the main functions of the Minesweeper game.
- * @property {{mine: string, hidden: string, flagged: string, numbers: string}} emojis The emojis corresponding to the states of the cells.
+ * @property {{mine: string, hidden: string, flagged: string, numbers: string[]}} emojis The emojis corresponding to the states of the cells.
  * @property {number} width The number of cells in a row.
  * @property {number} height The number of cells in a column.
  * @property {boolean} playing Whether the game is currently played.
@@ -30,7 +30,7 @@ class MCell {
 class Minesweeper {
 	/**
 	 * Creates a Minesweeper object.
-	 * @param {{mine: string, hidden: string, flagged: string, numbers: string}} emojis The emojis corresponding to the states of the cells.
+	 * @param {{mine: string, hidden: string, flagged: string, numbers: string[]}} emojis The emojis corresponding to the states of the cells.
 	 * @param {number} width The number of cells in a row.
 	 * @param {number} height The number of cells in a column.
 	 */
@@ -55,20 +55,30 @@ class Minesweeper {
 	reveal(x, y, revealMine = true) {
 		let cell = this.getCell(x, y);
 		if (cell) {
-			if (cell.mine && revealMine) return 'mine';
-			else if (cell.flagged) return 'flagged';
+			if (cell.mine && revealMine) {
+				console.log('m');
+				return 'mine';
+			} 
+			else if (cell.flagged) {
+				console.log('f');
+				return 'flagged';
+			}
 			else if (cell.hidden) {
+				console.log('h');
 				cell.hidden = false;
 				if (this.neighbombs(x, y) == 0) {
 					for (let i = x-1; i <= x+1; i++) {
 						for (let j = y-1; j <= y+1; j++) {
-							if (this.getCell(i, j) && i != x && j != y)
+							if (this.getCell(i, j) && !(i == x && j == y))
 								this.reveal(i, j, false);
 						}
 					}
 				}
 				return 'revealed';
-			} else return 'unchanged';
+			} else {
+				console.log('u');
+				return 'unchanged';
+			}
 		} else return undefined;
 	}
 
@@ -125,6 +135,7 @@ class Minesweeper {
 	 */
 	get emojiray() {
 		let text = '';
+		console.log(this.emojis);
 		for (let y = 0; y<this.height; y++) {
 			if (y != 0) text += '\n';
 			for (let x = 0; x<this.width; x++) {
@@ -135,7 +146,10 @@ class Minesweeper {
 					else if	(cell.mine)		text += this.emojis.mine;
 					else					text += this.emojis.numbers[this.neighbombs(x, y)];
 				} else text += '❓';
+				
 			}
+			console.log(text);
+			console.log('');
 		}
 		return text;
 	}
