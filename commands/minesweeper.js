@@ -99,7 +99,7 @@ class Minesweeper {
 	 * @param {number} y The y coordinate of the cell.
 	 */
 	getCell(x, y) {
-		if (x >= 0 && x < width && y >= 0 && y < height)
+		if (x >= 0 && x < this.width && y >= 0 && y < this.height)
 			return this.board[x][y];
 		else return undefined;
 	}

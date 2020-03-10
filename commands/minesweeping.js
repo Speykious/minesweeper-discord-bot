@@ -41,8 +41,8 @@ module.exports = [
 		{'coords': 'position'}, {'required': ['coords']},
 		args => {
 			const hexstr = '0123456789abcdef';
-			const x = hexstr.indexOf(args['coords'][2]);
-			const y = hexstr.indexOf(args['coords'][3]);
+			const x = hexstr.indexOf(args['coords'][1]);
+			const y = hexstr.indexOf(args['coords'][2]);
 			const message = args.CHANNEL.lastMessage;
 			args.CHANNEL.lastMessage.delete();
 			if (x < 0 || x >= minesweeper.width || y < 0 || y >= minesweeper.height)
@@ -59,8 +59,8 @@ module.exports = [
 		{'coords': 'position'}, {'required': ['coords']},
 		args => {
 			const hexstr = '0123456789abcdef';
-			const x = hexstr.indexOf(args['coords'][2]);
-			const y = hexstr.indexOf(args['coords'][3]);
+			const x = hexstr.indexOf(args['coords'][1]);
+			const y = hexstr.indexOf(args['coords'][2]);
 			minesweeper.flagTrigger(x, y);
 			args.CHANNEL.lastMessage.delete();
 			if (minesweeper.lastBoardMessage)
