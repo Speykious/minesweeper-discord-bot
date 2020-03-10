@@ -30,7 +30,6 @@ module.exports = [
 			} else {
 				typing(args.CHANNEL, `<@!${args.AUTHOR}>, you're not My Lord. You can't stop me.`);
 			}
-			
 		}),
 	
 	new Command('edit',

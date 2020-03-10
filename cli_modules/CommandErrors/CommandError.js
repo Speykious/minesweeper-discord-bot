@@ -6,7 +6,7 @@ const { version } = require('../../package.json');
  * @property {string} type The type of the error.
  * @property {string} description The description of the error.
  * @property {Discord.Message} origin The message the error comes from.
- * @property {name: string, value: string} additionalFields The additional fields to add to the embed of the error.
+ * @property {{name: string, value: string}[]} additionalFields The additional fields to add to the embed of the error.
  * @property {number} color The color of the embed of the error.
  * @property {Discord.RichEmbed} embed The embed of the error that is gonna be sent to the channel.
  */
@@ -16,7 +16,7 @@ class CommandError {
 	 * @param {string} type The type of the error.
 	 * @param {string} description The description of the error.
 	 * @param {Discord.Message} origin The message the error comes from.
-	 * @param {name: string, value: string} additionalFields The additional fields to add to the embed of the error.
+	 * @param {{name: string, value: string}[]} additionalFields The additional fields to add to the embed of the error.
 	 * @param {number} color The color of the embed of the error.
 	 */
 	constructor(type, description, origin, additionalFields = null, color = 0xff3248) {
