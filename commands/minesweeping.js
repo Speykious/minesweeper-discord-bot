@@ -60,19 +60,11 @@ module.exports = [
 			
 		}),
 
-	new Command('show', 'Shows various minesweeper data, such as the board, or... the board.',
-		{'ui': 'word'}, {'required': ['ui']},
-		args => {
-			switch(args['ui']) {
-				case 'board':
-					minesweeper.addCommand(args.CHANNEL.lastMessage.content);
-					typing(args.CHANNEL, minesweeper.embedBoard)
-					.then(message => minesweeper.lastBoardMessage = message);
-					break;
-				default:
-					typing(args.CHANNEL, `Sorry, I don't know any kind of \`${args['ui']}\`.`);
-					break;
-			}
+	new Command('showboard', 'Shows various minesweeper data, such as the board, or... the board.',
+		{}, {}, args => {
+			minesweeper.addCommand(args.CHANNEL.lastMessage.content);
+			typing(args.CHANNEL, minesweeper.embedBoard)
+			.then(message => minesweeper.lastBoardMessage = message);
 		}),
 	
 	new Command('t', 'Reveals a minesweeper cell of the grid. If you touch a mine, you lose.',
@@ -90,6 +82,10 @@ module.exports = [
 			const result = minesweeper.reveal(x, y);
 			if (result === 'mine') {
 				minesweeper.revealMines();
+				minesweeper.playing = false;
+			} else if (!minesweeper.remainsMinesUnflagged || !minesweeper.remainsHiddenCells) {
+				minesweeper.revealMines();
+				minesweeper.win = true;
 				minesweeper.playing = false;
 			}
 			if (minesweeper.lastBoardMessage)

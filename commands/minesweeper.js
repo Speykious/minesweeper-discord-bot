@@ -54,7 +54,7 @@ class Minesweeper {
 	 * @param {string} command 
 	 */
 	addCommand(command) {
-		while (this.commandHistory.length > 15)
+		while (this.commandHistory.length >= 10)
 			this.commandHistory.shift();
 		this.commandHistory.push(command);
 
@@ -125,6 +125,34 @@ class Minesweeper {
 			console.log('wait what the fuck');
 			return this;
 		}
+	}
+	
+	/**
+	 * Tells you if there are any remaining unflagged mines, across the entire board.
+	 */
+	get remainsMinesUnflagged() {
+		for (let i = 0; i <= this.width; i++) {
+			for (let j = 0; j <= this.height; j++) {
+				let cell = this.getCell(i, j);
+				if (cell) if (cell.mine && !cell.flagged)
+					return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Tells you if there are any remaining hidden cells, across the entire board.
+	 */
+	get remainsHiddenCells() {
+		for (let i = 0; i <= this.width; i++) {
+			for (let j = 0; j <= this.height; j++) {
+				let cell = this.getCell(i, j);
+				if (cell) if (cell.hidden && !cell.mine)
+					return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -199,7 +227,8 @@ class Minesweeper {
 			.setColor(0xff6416)
 			.setTitle('Minesweeper Board')
 			.addField(`Size: ${this.width}x${this.height}`, this.emojiray, true)
-			.addField('Command history', '```'+this.commandHistory.join('\n')+'```')
+			//.addField('Command history', this.commandHistory.map(c => `\`${c}\``).join('\n'), true)
+			.addField('Command history', '```'+this.commandHistory.join('\n')+'```', true)
 			.setFooter('I wonder if everything is fine. 🤔');
 		if (!this.playing) {
 			if (this.win) embed.setDescription('You win!');

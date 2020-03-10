@@ -13,11 +13,8 @@ bot.on('ready', () => {
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
 		.addField('Owner my Lord', `<@!${process.env.OWNER_ID}>`)
-		.addField('Last update', 'Tried to implement minesweeper <_<'
-								+ '\n+ fixed 5 issues and added a newboard function'
-								+ '\n+ fixed an issue with the newboard function'
-								+ '\n+ added mines on the board'
-								+ '\n+ added a command history')
+		.addField('Last update', 'Implemented minesweeper, with win and lose features and actually working commands'
+								+ '\n... I think')
 		.setFooter(`I am now ON.`);
 
 	typing(defchan, testembed)
@@ -27,7 +24,6 @@ bot.on('ready', () => {
 const StringTypeManager = require('./cli_modules/StringTypeManager.js');
 const CommandManager = require('./cli_modules/CommandManager.js');
 const ExistentialCrisisError = require('./cli_modules/CommandErrors/ExistentialCrisisError.js');
-console.log(ExistentialCrisisError);
 const Command = require('./cli_modules/Command.js');
 
 const simple = require('./commands/simple.js');
