@@ -142,6 +142,21 @@ class Minesweeper {
 	}
 
 	/**
+	 * Tells you how many remaining unflagged mines there are across the entire board.
+	 */
+	get remainingMinesUnflagged() {
+		let r = 0;
+		for (let i = 0; i <= this.width; i++) {
+			for (let j = 0; j <= this.height; j++) {
+				let cell = this.getCell(i, j);
+				if (cell) if (cell.hidden && !cell.mine)
+					r++;
+			}
+		}
+		return r;
+	}
+
+	/**
 	 * Tells you if there are any remaining hidden cells, across the entire board.
 	 */
 	get remainsHiddenCells() {
@@ -154,6 +169,8 @@ class Minesweeper {
 		}
 		return false;
 	}
+
+	
 
 	/**
 	 * Reveals all the mines of the board.
@@ -229,7 +246,7 @@ class Minesweeper {
 			.addField(`Size: ${this.width}x${this.height}`, this.emojiray, true)
 			//.addField('Command history', this.commandHistory.map(c => `\`${c}\``).join('\n'), true)
 			.addField('Command history', '```'+this.commandHistory.join('\n')+'```', true)
-			.setFooter('I wonder if everything is fine. 🤔');
+			.setFooter(`Flags remaining: ${this.remainingMinesUnflagged}`);
 		if (!this.playing) {
 			if (this.win) embed.setDescription('You win!');
 			else embed.setDescription('You lose!');
