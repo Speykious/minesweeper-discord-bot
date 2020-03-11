@@ -11,9 +11,8 @@ class CommandManager {
 	 * @param {StringTypeManager} stm The StringTypeManager to manage the different types.
 	 * @param {Command[]} commands The array of all commands.
 	 */
-	constructor(bot, prefix, stm, commands) {
+	constructor(bot, stm, commands) {
 		this.bot = bot;
-		this.prefix = prefix;
 		this.stm = stm;
 		this.commands = commands;
 		this.ERROR = '';
@@ -41,9 +40,9 @@ class CommandManager {
 	 * Returns whether the message was successfully interpreted.
 	 * @param {Discord.Message} msg The message to interpret.
 	 */
-	interpret(msg) {
+	interpret(msg, prefix) {
 		let message = msg.content;
-		const tester = new RegExp('^'+this.prefix, 'g');
+		const tester = new RegExp('^'+prefix, 'g');
 		let match = message.match(tester);
 		/*///////////////////////////////////////////////
 		console.log('message = '+message);

@@ -8,7 +8,7 @@ const typing = require('./typing.js');
 bot.on('ready', () => {
 	console.log(`Logged in as ${bot.user.tag}!`);
 	const defchan = bot.channels.get(process.env.DEFAULT_CHANNEL_ID);
-
+	console.log(bot.guilds);
 	const testembed = new Discord.RichEmbed()
 		.setTitle(`**MinesweeperBot** [v${version}]`)
 		.setColor(0x55ccff)
@@ -70,11 +70,11 @@ const STM = new StringTypeManager({
 	'list[position]': /([xX][\da-f]{2}\s+)?[xX][\da-f]{2}/
 })
 
-const CM = new CommandManager(bot, process.env.PREFIX, STM, commands);
+const CM = new CommandManager(bot, STM, commands);
 
 bot.on('message', msg => {
 	// Continue only if the msg begins with the prefix
-	if (!CM.interpret(msg)) {
+	if (!CM.interpret(msg, process.env.PREFIX)) {
 		typing(msg.channel, CM.ERROR);
 	}
 });
